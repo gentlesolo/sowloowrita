@@ -20,6 +20,12 @@ public class AppUser {
     private String firstName;
     private String lastName;
     private String username;
+    @Column(
+            name = "email",
+            nullable = false,
+            columnDefinition = "TEXT",
+            unique = true
+    )
     private String email;
     private String password;
     @ManyToMany(fetch = FetchType.EAGER)
