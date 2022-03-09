@@ -1,5 +1,6 @@
 package com.sowloo.sowloowrita.security;
 
+import com.sowloo.sowloowrita.facebook.FacebookConnectionSignup;
 import com.sowloo.sowloowrita.facebook.FacebookSignInAdapter;
 import com.sowloo.sowloowrita.filter.CustomAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
@@ -8,17 +9,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.social.connect.ConnectionFactoryLocator;
-import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.mem.InMemoryUsersConnectionRepository;
 import org.springframework.social.connect.support.ConnectionFactoryRegistry;
@@ -40,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     PasswordEncoder passwordEncoder;
 
     @Autowired
-    private FaceBookConnectionSignup facebookConnectionSignup ;
+    private FacebookConnectionSignup facebookConnectionSignup ;
     @Value("${spring.social.facebook.appSecret}")
     String appSecret;
 
