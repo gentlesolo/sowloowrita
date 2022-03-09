@@ -1,7 +1,10 @@
 package com.sowloo.sowloowrita.security;
 
+import com.sowloo.sowloowrita.facebook.FacebookSignInAdapter;
 import com.sowloo.sowloowrita.filter.CustomAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -13,6 +16,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.social.connect.ConnectionFactoryLocator;
+import org.springframework.social.connect.ConnectionSignUp;
+import org.springframework.social.connect.UsersConnectionRepository;
+import org.springframework.social.connect.mem.InMemoryUsersConnectionRepository;
+import org.springframework.social.connect.support.ConnectionFactoryRegistry;
+import org.springframework.social.connect.web.ProviderSignInController;
+import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,12 +35,23 @@ import static org.springframework.http.HttpMethod.POST;
 @RequiredArgsConstructor
 
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private FaceBookConnectionSignup facebookConnectionSignup ;
+    @Value("${spring.social.facebook.appSecret}")
+    String appSecret;
+
+    @Value("${spring.social.facebook.appId}")
+    String appId;
+
     private final UserDetailsService userDetailsService;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
     }
 
     @Override
@@ -48,15 +70,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/facebook/sign-in").permitAll()
                 .anyRequest().authenticated();
     }
-
     @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception{
-        return super.authenticationManagerBean();
+    public ProviderSignInController providerSignInController() {
+        ConnectionFactoryLocator connectionFactoryLocator =
+                connectionFactoryLocator();
+        UsersConnectionRepository usersConnectionRepository =
+                getUsersConnectionRepository(connectionFactoryLocator);
+        ((InMemoryUsersConnectionRepository) usersConnectionRepository)
+                .setConnectionSignUp(facebookConnectionSignup);
+        return new ProviderSignInController(connectionFactoryLocator,
+                usersConnectionRepository, new FacebookSignInAdapter());
     }
 
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
+    private ConnectionFactoryLocator connectionFactoryLocator() {
+        ConnectionFactoryRegistry registry = new ConnectionFactoryRegistry();
+        registry.addConnectionFactory(new FacebookConnectionFactory(appId, appSecret));
+        return registry;
+    }
+
+    private UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator
+                                                                           connectionFactoryLocator) {
+        return new InMemoryUsersConnectionRepository(connectionFactoryLocator);
     }
 }
