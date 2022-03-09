@@ -1,2 +1,6 @@
-package com.sowloo.sowloowrita.service;public class FacebookService {
+package com.sowloo.sowloowrita.service;
+
+public interface FacebookService {
+    String loginUser(String fbAccessToken);
+
 }
