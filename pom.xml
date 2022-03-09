@@ -88,6 +88,13 @@
             <artifactId>spring-restdocs-mockmvc</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- https://jar-download.com -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.12.0</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/com.github.java-json-tools/json-patch -->
         <dependency>
             <groupId>com.github.java-json-tools</groupId>
