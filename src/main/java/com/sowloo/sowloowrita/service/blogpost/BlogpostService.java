@@ -4,6 +4,7 @@ import com.github.fge.jsonpatch.JsonPatch;
 import com.sowloo.sowloowrita.data.dto.BlogpostDto;
 import com.sowloo.sowloowrita.data.models.Blogpost;
 import com.sowloo.sowloowrita.web.exception.BlogpostDoesNotExistException;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public interface BlogpostService {
 
     Blogpost findBlogpostByIndustry(String industry)throws BlogpostDoesNotExistException;
 
-    List<Blogpost> getAllBlogposts();
+    List<Blogpost> getAllBlogposts(Pageable pageable);
 
     Blogpost createBlogpost(BlogpostDto blogpostDto);
 
