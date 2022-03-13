@@ -11,6 +11,7 @@ import com.sowloo.sowloowrita.data.repository.SocialmediaRepository;
 import com.sowloo.sowloowrita.web.exception.BusinessLogicException;
 import com.sowloo.sowloowrita.web.exception.SocialmediaDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,8 +53,8 @@ public class SocialmediaServiceImpl implements SocialmediaService {
     }
 
     @Override
-    public List<Socialmedia> getAllSocialmedias() {
-        return socialmediaRepository.findAll();
+    public List<Socialmedia> getAllSocialmedias(Pageable pageable) {
+        return socialmediaRepository.findAll(pageable).getContent();
     }
 
     @Override
