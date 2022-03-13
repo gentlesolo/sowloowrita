@@ -11,6 +11,7 @@ import com.sowloo.sowloowrita.data.repository.PaidadvertRepository;
 import com.sowloo.sowloowrita.web.exception.BusinessLogicException;
 import com.sowloo.sowloowrita.web.exception.PaidadvertDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,8 +53,8 @@ public class PaidadvertServiceImpl implements PaidadvertService {
     }
 
     @Override
-    public List<Paidadvert> getAllPaidadverts() {
-        return paidadvertRepository.findAll();
+    public List<Paidadvert> getAllPaidadverts(Pageable pageable) {
+        return paidadvertRepository.findAll(pageable).getContent();
     }
 
     @Override
