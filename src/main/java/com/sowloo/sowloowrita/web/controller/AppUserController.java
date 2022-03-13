@@ -20,12 +20,12 @@ public class AppUserController {
     private final AppUserService appUserService;
 
     @GetMapping("/appusers")
-    public ResponseEntity<List<AppUser>>getAppUsers(){
+    public ResponseEntity<List<AppUser>> getAppUsers(){
         return ResponseEntity.ok().body(appUserService.getAppUsers());
     }
 
     @PostMapping("/appuser/save")
-    public ResponseEntity<AppUser>saveAppUsers(@RequestBody AppUser appUser){
+    public ResponseEntity<AppUser> saveAppUsers(@RequestBody AppUser appUser) {
         URI uri =
                 URI.create(ServletUriComponentsBuilder
                         .fromCurrentContextPath()
@@ -35,7 +35,7 @@ public class AppUserController {
     }
 
     @PostMapping("/role/save")
-    public ResponseEntity<Role>saveAppUsers(@RequestBody Role role){
+    public ResponseEntity<Role> saveAppUsers(@RequestBody Role role) {
         URI uri =
                 URI.create(ServletUriComponentsBuilder
                         .fromCurrentContextPath()
@@ -45,7 +45,7 @@ public class AppUserController {
     }
 
     @PostMapping("/role/addtouser")
-    public ResponseEntity<?>addRoleToUser(@RequestBody RoleToUserForm form){
+    public ResponseEntity<?> addRoleToUser(@RequestBody RoleToUserForm form) {
         appUserService.addRoleToUser(form.getUsername(), form.getRolename());
         return ResponseEntity.ok().build();
     }
@@ -88,8 +88,9 @@ public class AppUserController {
 //    }
 
 }
+
 @Data
-class RoleToUserForm{
+class RoleToUserForm {
     private String username;
     private String rolename;
 }
