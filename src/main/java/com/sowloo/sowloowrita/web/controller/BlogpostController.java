@@ -8,6 +8,9 @@ import com.sowloo.sowloowrita.service.blogpost.BlogpostService;
 import com.sowloo.sowloowrita.web.exception.BusinessLogicException;
 import com.sowloo.sowloowrita.web.exception.BlogpostDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +28,11 @@ public class BlogpostController {
 
 
     @GetMapping()
-    public ResponseEntity<?> findAllBlogposts(){
-        List<Blogpost> blogposts = blogpostService.getAllBlogposts();
+    public ResponseEntity<?> findAllBlogposts(@RequestParam(name = "page") int page,
+                                              @RequestParam(name = "size", required = false, defaultValue = "30") int pageSize,
+                                              @RequestParam(name = "sort", required = false, defaultValue = "dateCreated") String sortTerm){
+        Pageable pageable = PageRequest.of(page, pageSize, Sort.by(sortTerm).descending());
+        List<Blogpost> blogposts = blogpostService.getAllBlogposts(pageable);
         return new ResponseEntity<>(blogposts, HttpStatus.OK);
         //return ResponseEntity.ok().body(blogposts);
     }
