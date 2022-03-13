@@ -8,6 +8,9 @@ import com.sowloo.sowloowrita.service.socialmedia.SocialmediaService;
 import com.sowloo.sowloowrita.web.exception.BusinessLogicException;
 import com.sowloo.sowloowrita.web.exception.SocialmediaDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +28,11 @@ public class SocialmediaController {
 
 
     @GetMapping()
-    public ResponseEntity<?> findAllSocialmedias(){
-        List<Socialmedia> socialmedias = socialmediaService.getAllSocialmedias();
+    public ResponseEntity<?> findAllSocialmedias(@RequestParam(name = "page", defaultValue = "0") int page,
+                                                 @RequestParam(name = "size", required = false, defaultValue = "30") int pageSize,
+                                                 @RequestParam(name = "sort", required = false, defaultValue = "dateCreated") String sortTerm){
+        Pageable pageable = PageRequest.of(page, pageSize, Sort.by(sortTerm).descending());
+        List<Socialmedia> socialmedias = socialmediaService.getAllSocialmedias(pageable);
         return new ResponseEntity<>(socialmedias, HttpStatus.OK);
         //return ResponseEntity.ok().body(socialmedias);
     }
