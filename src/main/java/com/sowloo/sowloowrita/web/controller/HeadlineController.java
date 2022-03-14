@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin("*")
+//@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/v1/headline")
-//@CrossOrigin(origins = "*")
+@CrossOrigin(methods = RequestMethod.GET)
 public class HeadlineController {
 
     @Autowired
