@@ -17,6 +17,7 @@ import com.sowloo.sowloowrita.web.exceptions.EmployeeNotFoundException;
 import com.sowloo.sowloowrita.web.exceptions.RunTimeExceptionPlaceholder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -84,9 +85,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> getAllEmployees() {
+    public List<Employee> getAllEmployees(Pageable pageable) {
 
-        return employeeRepository.findAll();
+        return employeeRepository.findAll(pageable).getContent();
     }
 
     @Override

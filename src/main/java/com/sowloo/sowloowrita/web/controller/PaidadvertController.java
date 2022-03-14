@@ -8,6 +8,9 @@ import com.sowloo.sowloowrita.service.paidadvert.PaidadvertService;
 import com.sowloo.sowloowrita.web.exception.BusinessLogicException;
 import com.sowloo.sowloowrita.web.exception.PaidadvertDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +29,11 @@ public class PaidadvertController {
 
 
     @GetMapping()
-    public ResponseEntity<?> findAllPaidadverts(){
-        List<Paidadvert> paidadverts = paidadvertService.getAllPaidadverts();
+    public ResponseEntity<?> findAllPaidadverts(@RequestParam(name = "page", defaultValue = "0") int page,
+                                                @RequestParam(name = "size", required = false, defaultValue = "30") int pageSize,
+                                                @RequestParam(name = "sort", required = false, defaultValue = "dateCreated") String sortTerm){
+        Pageable pageable = PageRequest.of(page, pageSize, Sort.by(sortTerm).descending());
+        List<Paidadvert> paidadverts = paidadvertService.getAllPaidadverts(pageable);
         return new ResponseEntity<>(paidadverts, HttpStatus.OK);
         //return ResponseEntity.ok().body(paidadverts);
     }

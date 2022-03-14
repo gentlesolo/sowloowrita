@@ -12,6 +12,7 @@ import com.sowloo.sowloowrita.service.emailcampaign.EmailcampaignService;
 import com.sowloo.sowloowrita.web.exception.BusinessLogicException;
 import com.sowloo.sowloowrita.web.exception.EmailcampaignDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -53,8 +54,8 @@ public class EmailcampaignServiceImpl implements EmailcampaignService {
     }
 
     @Override
-    public List<Emailcampaign> getAllEmailcampaigns() {
-        return emailcampaignRepository.findAll();
+    public List<Emailcampaign> getAllEmailcampaigns(Pageable pageable) {
+        return emailcampaignRepository.findAll(pageable).getContent();
     }
 
     @Override

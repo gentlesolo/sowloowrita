@@ -11,6 +11,7 @@ import com.sowloo.sowloowrita.data.repository.ProductRepository;
 import com.sowloo.sowloowrita.web.exception.BusinessLogicException;
 import com.sowloo.sowloowrita.web.exception.ProductDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,8 +40,8 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    public List<Product> getAllProducts(Pageable pageable) {
+        return productRepository.findAll(pageable).getContent();
     }
 
     @Override

@@ -12,6 +12,7 @@ import com.sowloo.sowloowrita.service.blogpost.BlogpostService;
 import com.sowloo.sowloowrita.web.exception.BusinessLogicException;
 import com.sowloo.sowloowrita.web.exception.BlogpostDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -53,8 +54,8 @@ public class BlogpostServiceImpl implements BlogpostService {
     }
 
     @Override
-    public List<Blogpost> getAllBlogposts() {
-        return blogpostRepository.findAll();
+    public List<Blogpost> getAllBlogposts(Pageable pageable) {
+        return blogpostRepository.findAll(pageable).getContent();
     }
 
     @Override

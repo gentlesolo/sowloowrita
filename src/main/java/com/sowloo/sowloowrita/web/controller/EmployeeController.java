@@ -11,6 +11,9 @@ import com.sowloo.sowloowrita.web.exceptions.DuplicateEmailException;
 import com.sowloo.sowloowrita.web.exceptions.EmployeeNotFoundException;
 import com.sowloo.sowloowrita.web.exceptions.RunTimeExceptionPlaceholder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,8 +48,11 @@ public class EmployeeController {
 //    }
 
     @GetMapping()
-    public ResponseEntity<?> getAllEmployees(){
-        List<Employee> employees = employeeService.getAllEmployees();
+    public ResponseEntity<?> getAllEmployees(@RequestParam(name = "page", defaultValue = "0") int page,
+                                             @RequestParam(name = "size", required = false, defaultValue = "30") int pageSize,
+                                             @RequestParam(name = "sort", required = false, defaultValue = "dateCreated") String sortTerm){
+        Pageable pageable = PageRequest.of(page, pageSize, Sort.by(sortTerm).descending());
+        List<Employee> employees = employeeService.getAllEmployees(pageable);
         return ResponseEntity.ok().body(employees);
     }
 

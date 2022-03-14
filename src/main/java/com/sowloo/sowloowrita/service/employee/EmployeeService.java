@@ -4,6 +4,7 @@ import com.sowloo.sowloowrita.data.dtos.request.CreateEmployeeRequestDto;
 import com.sowloo.sowloowrita.data.dtos.response.CreateEmployeeResponseDto;
 import com.sowloo.sowloowrita.data.models.Employee;
 import com.github.fge.jsonpatch.JsonPatch;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public interface EmployeeService {
 
     CreateEmployeeResponseDto createEmployee(CreateEmployeeRequestDto createEmployeeRequest);
 
-    List<Employee> getAllEmployees();
+    List<Employee> getAllEmployees(Pageable pageable);
 
     Employee findByEmployeeId(String id);
 
