@@ -28,7 +28,7 @@ public class SowlooWritaApplication {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("https://writa.com.ng/", "http://localhost:3000");
+                registry.addMapping("/**").allowedOrigins("https://writa.com.ng", "http://localhost:3000");
             }
         };
     }
