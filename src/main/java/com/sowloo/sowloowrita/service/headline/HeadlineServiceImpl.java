@@ -11,6 +11,7 @@ import com.sowloo.sowloowrita.data.repository.HeadlineRepository;
 import com.sowloo.sowloowrita.web.exception.BusinessLogicException;
 import com.sowloo.sowloowrita.web.exception.HeadlineDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,8 +53,14 @@ public class HeadlineServiceImpl implements HeadlineService{
     }
 
     @Override
-    public List<Headline> getAllHeadlines() {
-        return headlineRepository.findAll();
+    public List<Headline> getAllHeadlines(Pageable pageable) {
+        return headlineRepository.findAll(pageable).getContent();
+//        return paidadvertRepository.findAll(pageable).getContent();
+    }
+
+    @Override
+    public long getHeadlinesCount() {
+        return headlineRepository.count();
     }
 
     @Override
