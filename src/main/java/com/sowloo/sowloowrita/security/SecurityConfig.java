@@ -3,6 +3,7 @@ package com.sowloo.sowloowrita.security;
 import com.sowloo.sowloowrita.facebook.FacebookConnectionSignup;
 import com.sowloo.sowloowrita.facebook.FacebookSignInAdapter;
 import com.sowloo.sowloowrita.filter.CustomAuthenticationFilter;
+import com.sowloo.sowloowrita.service.MyUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,6 +36,8 @@ import static org.springframework.http.HttpMethod.POST;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
+    MyUserDetailsService userDetailsService;
+    @Autowired
     PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -45,7 +48,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${spring.social.facebook.appId}")
     String appId;
 
-    private final UserDetailsService userDetailsService;
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
@@ -86,8 +88,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return registry;
     }
 
-    private UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator
-                                                                           connectionFactoryLocator) {
+    private UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
         return new InMemoryUsersConnectionRepository(connectionFactoryLocator);
     }
 
