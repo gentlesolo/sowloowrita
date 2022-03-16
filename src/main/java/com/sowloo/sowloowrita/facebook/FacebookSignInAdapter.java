@@ -11,13 +11,14 @@ import java.util.Arrays;
 
 public class FacebookSignInAdapter implements SignInAdapter {
     @Override
-    public String signIn(String localUserId, Connection<?> connection, NativeWebRequest nativeWebRequest) {
+    public String signIn(String localUserId,
+                         Connection<?> connection,
+                         NativeWebRequest nativeWebRequest) {
 
         SecurityContextHolder.getContext().setAuthentication(
                 new UsernamePasswordAuthenticationToken(
                         connection.getDisplayName(), null,
                         Arrays.asList(new SimpleGrantedAuthority("FACEBOOK_USER"))));
-
         return null;
     }
 }

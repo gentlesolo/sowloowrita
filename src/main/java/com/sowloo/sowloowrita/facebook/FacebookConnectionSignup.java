@@ -5,11 +5,12 @@ import com.sowloo.sowloowrita.data.repository.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionSignUp;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
-@Service
+@Component
 public class FacebookConnectionSignup implements ConnectionSignUp {
     @Autowired
     private AppUserRepository appUserRepository;
