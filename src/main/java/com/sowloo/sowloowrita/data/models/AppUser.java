@@ -18,8 +18,15 @@ public class AppUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;
+    private String firstName;
+    private String lastName;
     private String username;
+    @Column(
+            name = "email",
+            nullable = false,
+            columnDefinition = "TEXT",
+            unique = true
+    )
     private String email;
     private String password;
 

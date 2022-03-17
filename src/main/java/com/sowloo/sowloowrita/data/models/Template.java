@@ -1,14 +1,10 @@
 package com.sowloo.sowloowrita.data.models;
 
 import lombok.Data;
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 @Data
 @Entity
